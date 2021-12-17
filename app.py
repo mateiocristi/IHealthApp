@@ -33,25 +33,29 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    username = request.form["username"]
-    first_name = request.form["firstName"]
-    last_name = request.form["lastName"]
-    email = request.form["email"]
-    address = request.form["address"]
-    county = request.form["county"]
-    city = request.form["city"]
-    phone = request.form["phone"]
-    birthdate = request.form["birthdate"]
-    cnp = request.form["cnp"]
-    password = request.form["password"]
-    password_confirm = request.form["confirmPassword"]
-    if password != password_confirm:
-        return render_template(url_for("register"))
-    if not querries.get_user_by_username(username) and len(username) > 5 and len(password) > 5:
-        password = cy.hash_password(password)
-        if querries.add_user(username, email, password, first_name, last_name, county, city, address, phone, birthdate, cnp) == "ok":
-            session.update({"username": username})
-            session.update({"user_id": querries.get_user_by_username(username)["id"]})
+    if request.method =="POST":
+        user = {
+            "username" : request.form["username"],
+            "first_name" : request.form["firstName"],
+            "last_name" : request.form["lastName"],
+            "email" : request.form["email"],
+            "address" : request.form["address"],
+            "county" : request.form["county"],
+            "city" : request.form["city"],
+            "phone" : request.form["phone"],
+            "birth_date" : request.form["birthdate"],
+            "cnp" : request.form["cnp"],
+            "password" : request.form["password"]
+        }
+        password_confirm = request.form["confirmPassword"]
+        if user["password"] != password_confirm:
+            return render_template(url_for("register"))
+        if not querries.get_user_by_username(user["username"]) and len(user["username"]) > 5 and len(user["password"]) > 5:
+
+            password = cy.hash_password(user["password"])
+            if querries.add_user(user) == "ok":
+                session.update({"username": user["username"]})
+                session.update({"user_id": querries.get_user_by_username(user["usrename"])["id"]})
         return redirect(url_for("home"))
     return render_template("register.html")
 
