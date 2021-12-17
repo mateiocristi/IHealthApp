@@ -22,7 +22,7 @@ def login():
         username = request.form["email"]
         password = request.form["password"]
         try:
-            user = querries.get_user_by_username(username)
+            user = querries.get_user_by_email(username, )
             if (
                 username == user["username"]
                 or username == user["email"]
@@ -55,7 +55,7 @@ def register():
             return render_template(url_for("register"))
         print("password ok")
         if (
-            not querries.get_user_by_username(user["username"])
+            not querries.get_user_by_email(user["username"], )
             and len(user["username"]) > 5
             and len(user["password"]) > 5
         ):
@@ -66,7 +66,7 @@ def register():
             if resp == "ok":
                 session.update({"username": user["username"]})
                 session.update(
-                    {"user_id": querries.get_user_by_username(user["username"])["id"]}
+                    {"user_id": querries.get_user_by_email(user["username"], )["id"]}
                 )
         return redirect(url_for("home"))
     return render_template("register.html")

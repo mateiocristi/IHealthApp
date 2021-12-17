@@ -2,17 +2,14 @@ import connection
 
 
 @connection.connection_handler
-def get_user_by_username(cursor, username):
+def get_user_by_email(cursor, email):
     querry = """
         SELECT * 
         FROM users
-        WHERE 
-            username = %(username)s
-        OR
-            email = %(username)s
+        WHERE email = %(email)s
         
             ;"""
-    cursor.execute(querry, {"username": username})
+    cursor.execute(querry, {"email": email})
     return cursor.fetchone()
 
 
