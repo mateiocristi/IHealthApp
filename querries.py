@@ -92,7 +92,7 @@ def add_cart(cursor):
 @connection.connection_handler
 def add_user(cursor, user):
     cart_id = add_cart()
-    user.update({"cart_id": cart_id})
+    user.update({"cart_id": cart_id["id"]})
     querry = """
         INSERT INTO users 
         (first_name, last_name, county, city, address, birth_date, email, phone_number, cnp, username, password, access_level, cart_id)
