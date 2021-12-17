@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from werkzeug.utils import secure_filename
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import cryptography as cy
 
 import querries
@@ -36,31 +35,40 @@ def user_route(user_id):
     return render_template("home.html", username=None)
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["email"]
-        password = request.form["password"]
-        try:
-            user = querries.get_user_by_email(username, )
-            if (
-                username == user["username"]
-                or username == user["email"]
-                and cy.verify_password(password, user["password"])
-            ):
-                return redirect(url_for("home"))
-            else:
-                return render_template("login.html", message="Invalid login")
-        except:
-            return render_template("login.html", message="Invalid login")
-    return render_template("login.html", message=None)
+@app.route("/login", methods=["GET"])
+def display_login():
+    return render_template("login.html")
 
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        user = {
-            "first_name": request.form["firstName"],
+@app.route("/login", methods=["POST"])
+def login_user():
+    email = request.form["email"]
+    password = request.form["password"]
+    user = querries.get_user_by_email(email)
+    if user is not None and cy.verify_password(password, user["password"]):
+        session['username'] = user["email"]
+        session['user_id'] = querries.get_user_by_email(user["email"])["id"]
+        return redirect(url_for("home"))
+    else:
+        flash('Username and/ or password are wrong')
+        return render_template("login.html")
+
+
+@app.route("/logout")
+def logout_user():
+    session.pop('username', None)
+    session.pop('user_id', None)
+    return redirect(url_for('home'))
+
+
+@app.route("/register", methods=["GET"])
+def display_register():
+    return render_template("register.html")
+
+
+@app.route("/register", methods=["POST"])
+def register_user():
+    user = {"first_name": request.form["firstName"],
             "last_name": request.form["lastName"],
             "email": request.form["email"],
             "address": request.form["address"],
@@ -68,28 +76,16 @@ def register():
             "city": request.form["city"],
             "phone_number": request.form["phone"],
             "birth_date": request.form["birthdate"],
-            "password": request.form["password"],
-        }
-        password_confirm = request.form["confirmPassword"]
-        if user["password"] != password_confirm:
-            return render_template(url_for("register"))
-        print("password ok")
-        if (
-            not querries.get_user_by_email(user["username"], )
-            and len(user["username"]) > 5
-            and len(user["password"]) > 5
-        ):
-            print("user ok")
-            user["password"] = cy.hash_password(user["password"])
-            resp = querries.add_user(user)["message"]
-            print("response: " + resp)
-            if resp == "ok":
-                session.update({"username": user["username"]})
-                session.update(
-                    {"user_id": querries.get_user_by_email(user["username"], )["id"]}
-                )
-        return redirect(url_for("home"))
-    return render_template("register.html")
+            "password": request.form["password"]}
+    if user["password"] != request.form["confirmPassword"]:
+        flash('Please submit matching passwords')
+        return redirect(url_for("display_register"))
+    if querries.get_user_by_email(user["email"]) and len(user["email"]) < 5 and len(user["password"]) < 5:
+        return redirect(url_for("display_register"))
+    hashed_password = cy.hash_password(user["password"])
+    user["password"] = hashed_password
+    querries.add_user(user)
+    return redirect(url_for("home"))
 
 
 @app.route("/api-get-products/<int:category_id>/<int:supplier_id>")
