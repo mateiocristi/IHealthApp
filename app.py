@@ -31,9 +31,10 @@ def api_get_products(category_id, supplier_id):
     return products
 
 
-@app.route('/api-get-services/<int: category_id>/<int: supplier_id>')
+@app.route('/api-get-categories')
 @json_response
-
+def api_get_categories():
+    return queries.get_all_categories()
 
 
 if __name__ == '__main__':
