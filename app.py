@@ -21,11 +21,11 @@ def api_get_products(category_id, supplier_id):
 
     if category_id == 0:
         if supplier_id == 0:
-            products = queries.get_all_products()
+            products = querries.get_all_products()
         else:
             products = [product for product in products if product["supplier_id"] == supplier_id]
     else:
-        products = queries.get_products_with_category_id(category_id)
+        products = querries.get_products_with_category_id(category_id)
         if supplier_id != 0:
             products = [product for product in products if product["supplier_id"] == supplier_id]
     return products
@@ -34,7 +34,7 @@ def api_get_products(category_id, supplier_id):
 @app.route('/api-get-categories')
 @json_response
 def api_get_categories():
-    return queries.get_all_categories()
+    return querries.get_all_categories()
 
 
 if __name__ == '__main__':
