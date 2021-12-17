@@ -80,5 +80,55 @@ def get_all_categories(cursor):
     return cursor.fetchall()
 
 
+@connection.connection_handler
+def add_cart(cursor):
+    querry = """
+        INSERT INTO carts (quantity_product_id) VALUES ('') RETURNING id
+            ;"""
+    cursor.execute(querry)
+    return cursor.fetchone()
 
 
+@connection.connection_handler
+def add_user(cursor, user):
+    cart_id = add_cart()
+    user.update({"cart_id": cart_id})
+    querry = """
+        INSERT INTO users 
+        (first_name, last_name, county, city, address, birth_date, email, phone_number, cnp, username, password, access_level, cart_id)
+        VALUES (
+        %(first_name)s,
+        %(last_name)s,
+        %(county)s,
+        %(city)s,
+        %(address)s,
+        %(birth_date)s,
+        %(email)s,
+        %(phone_number)s,
+        %(cnp)s,
+        %(username)s,
+        %(password)s,
+        0,
+        %(cart_id)s
+        )
+        RETURNING 'ok'
+            ;"""
+    cursor.execute(querry, user)
+    return cursor.fetchone()
+
+
+@connection.connection_handler
+def get_cart_products(cursor, cart_id):
+    querry = """
+        SELECT quantity_product_id FROM carts WHERE id = %(cart_id)s
+    ;"""
+    cursor.execute(querry, {"cart_id": cart_id})
+    return cursor.fetchone()
+
+
+@connection.connection_handler
+def update_cart(cursor, user, product, qua):
+    cart = get_cart_products()
+    querry = """
+        
+            ;"""
