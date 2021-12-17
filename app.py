@@ -13,11 +13,15 @@ def home():  # put application's code here
     return render_template("home.html")
 
 
-# @app.route("/login")
-# def login():
-#     if request.method == "POST":
-#         username = request.form["emailInput"]
-#         password = request.form["passwordInput"]
+@app.route("/login")
+def login():
+    if request.method == "POST":
+        username = request.form["emailInput"]
+        password = request.form["passwordInput"]
+        try:
+            if username == querries.get_user_by_username(username) and
+
+
 
 
 
