@@ -1,0 +1,86 @@
+{% extends "root.html" %}
+{% block title %} Home {%  endblock %}
+{% block navbar_login_buttons %}
+    {% if username %}
+        <li class="right-items"><a href="{{ url_for("user_profile", user_id=user_id) }}">{{ username }}</a></li>
+    {% else %}
+        <li class="right-items"><a href="{{ url_for("login") }}">Login</a></li>
+{#        <li class="right-items"><a href="{{ url_for("registration_route") }}">Register</a></li>#}
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <img id="header-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="iHealth Logo" width="60px">
+        <h1 class="display-5">Register User</h1>
+        <form action="{{ url_for('register_user') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input type="name" class="form-control" id="username" name="username" placeholder="Username">
+                    </div>
+                    <div class="col">
+                        <input type="name" class="form-control" id="firstName" name="firstName" placeholder="First name">
+                    </div>
+                    <div class="col">
+                        <input type="name" class="form-control" id="lastName" name="lastName" placeholder="Last name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input type="address" class="form-control" id="address" name="address" placeholder="Street Address">
+                    </div>
+                     <div class="col">
+                        <input type="county" class="form-control" id="county" name="county" placeholder="County">
+                    </div>
+                    <div class="col">
+                        <input type="city" class="form-control" id="city" name="city" placeholder="City">
+                    </div>
+                     <div class="col">
+                        <input type="birthdate" class="form-control" id="birthdate" name="birthdate" placeholder="Zipcode">
+                    </div>
+                     <div class="col">
+                        <input type="cnp" class="form-control" id="zipcode" name="cnp" placeholder="CNP">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input type="phone" class="form-control" id="phone" name="phone" placeholder="Phone">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input type="email" class="form-control" id="emailInput" name="email" placeholder="Email">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div clas="col">
+                        <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input type="password" class="form-control" id="passwordInput" name="confirmPassword" placeholder="Confirm password">
+                    </div>
+                </div>
+            </div>
+            <div><button type="submit" class="btn btn-dark">Submit</button></div>
+        </form>
+        {% with messages = get_flashed_messages() %}
+           {% if messages %}
+              {% for message in messages %}
+                 {{ message }}
+              {% endfor %}
+           {% endif %}
+        {% endwith %}
+    </div>
+{% endblock %}

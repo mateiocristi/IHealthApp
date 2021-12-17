@@ -1,14 +1,21 @@
 {% extends "root.html" %}
 {% block title %} Home {%  endblock %}
-{% block navbar_login_buttons  %} {% endblock %}
+{% block navbar_login_buttons %}
+    {% if username %}
+        <li class="right-items"><a href="{{ url_for("user_profile", user_id=user_id) }}">{{ username }}</a></li>
+    {% else %}
+        <li class="right-items"><a href="{{ url_for("login") }}">Login</a></li>
+{#        <li class="right-items"><a href="{{ url_for("registration_route") }}">Register</a></li>#}
+    {% endif %}
+{% endblock %}
 {% block content %}
     <div class="card">
         <img id="header-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="iHealth Logo" width="60px">
         <h1 class="display-5">Login User</h1>
-        <form action="{{ url_for('login_user') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url_for('login') }}" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="emailInput" class="label"><strong>Email address</strong></label>
-                <input type="email" class="form-control" id="emailInput" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control" id="emailInput" name="email" aria-describedby="emailHelp" placeholder="Enter email"><br>
                 <small id="emailHelp" class="form-text text-muted label">We'll never share your email with anyone else.</small>
             </div>
             <div class="form-group">
