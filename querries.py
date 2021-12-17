@@ -12,7 +12,7 @@ def get_user_by_username(cursor, username):
             email = %(username)s
         
             ;"""
-    cursor.execute(querry, {'username': username})
+    cursor.execute(querry, {"username": username})
     return cursor.fetchone()
 
 
@@ -23,7 +23,7 @@ def get_user_by_id(cursor, user_id):
         FROM users
         WHERE id = %(user_id)s
             ;"""
-    cursor.execute(querry, {'user_id': user_id})
+    cursor.execute(querry, {"user_id": user_id})
     return cursor.fetchone()
 
 
@@ -111,7 +111,7 @@ def add_user(cursor, user):
         0,
         %(cart_id)s
         )
-        RETURNING 'ok'
+        RETURNING 'ok' as message
             ;"""
     cursor.execute(querry, user)
     return cursor.fetchone()
@@ -127,8 +127,12 @@ def get_cart_products(cursor, cart_id):
 
 
 @connection.connection_handler
-def update_cart(cursor, user, product, qua):
-    cart = get_cart_products()
+def update_cart(cursor, user, product_id, quantity):
+    cart = f"{get_cart_products()['quantity_product_id']},{quantity}_{product_id}"
     querry = """
-        
+        UPDATE carts 
+        SET quantity_product_id = %(cart)s
+        WHERE id=%(cart_id)s
             ;"""
+    user.update({"cart": cart})
+    cursor.execute(querry, user)
