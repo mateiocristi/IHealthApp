@@ -55,10 +55,9 @@ def register():
             password = cy.hash_password(user["password"])
             if querries.add_user(user) == "ok":
                 session.update({"username": user["username"]})
-                session.update({"user_id": querries.get_user_by_username(user["usrename"])["id"]})
+                session.update({"user_id": querries.get_user_by_username(user["username"])["id"]})
         return redirect(url_for("home"))
     return render_template("register.html")
-
 
 
 @app.route("/api-get-products/<int:category_id>/<int:supplier_id>")
