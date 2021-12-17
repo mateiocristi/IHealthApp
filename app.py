@@ -33,7 +33,7 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method =="POST":
+    if request.method == "POST":
         user = {
             "username" : request.form["username"],
             "first_name" : request.form["firstName"],
@@ -42,7 +42,7 @@ def register():
             "address" : request.form["address"],
             "county" : request.form["county"],
             "city" : request.form["city"],
-            "phone" : request.form["phone"],
+            "phone_number" : request.form["phone"],
             "birth_date" : request.form["birthdate"],
             "cnp" : request.form["cnp"],
             "password" : request.form["password"]
@@ -50,9 +50,12 @@ def register():
         password_confirm = request.form["confirmPassword"]
         if user["password"] != password_confirm:
             return render_template(url_for("register"))
+        print("password ok")
         if not querries.get_user_by_username(user["username"]) and len(user["username"]) > 5 and len(user["password"]) > 5:
-
-            password = cy.hash_password(user["password"])
+            print("user ok")
+            user["password"] = cy.hash_password(user["password"])
+            resp = querries.add_user(user)["message"]
+            print("response: " + resp)
             if querries.add_user(user) == "ok":
                 session.update({"username": user["username"]})
                 session.update({"user_id": querries.get_user_by_username(user["username"])["id"]})
