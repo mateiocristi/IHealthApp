@@ -7,6 +7,7 @@ import querries
 from utils import json_response
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2x"F4Qdu\n\xec]/'
 
 
 @app.route("/")
@@ -56,7 +57,7 @@ def register():
             user["password"] = cy.hash_password(user["password"])
             resp = querries.add_user(user)["message"]
             print("response: " + resp)
-            if querries.add_user(user) == "ok":
+            if resp == "ok":
                 session.update({"username": user["username"]})
                 session.update({"user_id": querries.get_user_by_username(user["username"])["id"]})
         return redirect(url_for("home"))

@@ -108,7 +108,7 @@ def add_user(cursor, user):
         %(cnp)s,
         %(username)s,
         %(password)s,
-        0,
+        1,
         %(cart_id)s
         )
         RETURNING 'ok' as message
