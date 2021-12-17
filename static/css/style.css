@@ -272,15 +272,17 @@ input, label{
 
 .products-container {
     display: grid;
-    padding-left: 10rem;
-    padding-right: 10rem;
+    padding: 2rem 10rem;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(auto-fill, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
 
 }
 
 .product-card {
     display: grid;
+    background-color: #23232e;
     justify-content: center;
     padding: 10px;
     color: white;
