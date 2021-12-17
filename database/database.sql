@@ -1,3 +1,22 @@
+drop table if exists phone_number_prefixes CASCADE;
+drop table if exists cities CASCADE;
+drop table if exists counties CASCADE;
+drop table if exists support_sessions_messages CASCADE;
+drop table if exists messages CASCADE;
+drop table if exists support_session CASCADE;
+drop table if exists consultations CASCADE;
+drop table if exists subscriptions CASCADE;
+drop table if exists orders CASCADE;
+drop table if exists carts CASCADE;
+drop table if exists users CASCADE;
+drop table if exists access_levels CASCADE;
+drop table if exists subscription_types CASCADE;
+drop table if exists products CASCADE;
+drop table if exists suppliers CASCADE;
+drop table if exists categories CASCADE;
+
+
+
 create table if not exists categories
 (
     id          serial
