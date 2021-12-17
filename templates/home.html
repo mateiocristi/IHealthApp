@@ -1,7 +1,7 @@
 {% extends "root.html" %}
 {% block title %} Home {% endblock %}
 {% block head %}
-    <script type="module" src="/static/javascript/home_page.js" defer></script>
+    <script type="module" src="/static/javascript/home_page.js" async></script>
 {% endblock %}
 {% block content %}
     <div class ="live_slider">
@@ -12,7 +12,8 @@
         <div id="sub-title">
             <h2>Products</h2>
         </div>
-        <div id="products-collection">
+        <div class="col col-sm-12 col-md-6 col-lg-4" id="products-collection ">
+
         </div>
     </div>
 

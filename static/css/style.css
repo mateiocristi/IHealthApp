@@ -271,7 +271,26 @@ input, label{
 }
 
 .products-container {
-    background-color: dimgrey;
+    display: grid;
+    padding-left: 10rem;
+    padding-right: 10rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
+
+}
+
+.product-card {
+    display: grid;
+    justify-content: center;
+    padding: 10px;
+    color: white;
+    line-height: 1;
+    border-radius: 5px;
+}
+
+.product-image {
+    height: 100%;
+    width: 100%;
 }
 
 #products-collection {

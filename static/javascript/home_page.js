@@ -26,11 +26,32 @@ export function showProducts(products) {
     products_container.innerHTML = "";
     for (let product of products) {
         let imgPath = `/product_${product.id}.jpg`
-        products_container.insertAdjacentHTML("beforeend", `<div id="product_card">
-                                            <div id="product_content">
-                                                <h3>${product.name}</h3>
-                                                <div><img src="/static/images${imgPath}" alt=""></div>
+        products_container.insertAdjacentHTML("beforeend", `
+                                            <div class="product-card" >
+                                                <img class="product-image" src="/static/images${imgPath}" alt=""> 
+                                                <div class="card-header">
+                                                    <h4>${product.name}</h4> 
+                                                    <p class="card-text">${product.description} </p>                                           
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="card-text">
+                                                        <p class="lead">${product.actual_price}</p>
+                                                    </div>
+                                                    <div class="card-text">
+                                                        <button class="btn btn-success" >Add to cart</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                          </div>`)
+                                            
+                                            `)
     }
+}
+
+function loadCSS(href, position) {
+  const link = document.createElement('link');
+  link.media = 'print';
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.onload = () => { link.media = 'all'; };
+  position.parentNode.insertBefore(link, position);
 }
