@@ -13,6 +13,7 @@ def get_user_by_username(cursor, username):
         
             ;"""
     cursor.execute(querry, {'username': username})
+    return cursor.fetchone()
 
 
 @connection.connection_handler
@@ -23,6 +24,7 @@ def get_user_by_id(cursor, user_id):
         WHERE id = %(user_id)s
             ;"""
     cursor.execute(querry, {'user_id': user_id})
+    return cursor.fetchone()
 
 
 @connection.connection_handler
@@ -65,7 +67,7 @@ def get_products_by_id(cursor, product_id):
                 WHERE id = %(product_id)s
                 ;"""
     cursor.execute(querry, {"product_id": product_id})
-    return cursor.fetchall()
+    return cursor.fetchone()
 
 
 @connection.connection_handler
@@ -76,5 +78,7 @@ def get_all_categories(cursor):
                 ;"""
     cursor.execute(querry)
     return cursor.fetchall()
+
+
 
 
