@@ -47,6 +47,13 @@ body {
 }
 
 #header-logo {
-    position: absolute;
-    margin-left: 390px;
+    margin-left: 15px;
+}
+
+#search {
+    margin-top: 2px;
+}
+
+.form-control {
+    margin-right: 300px;
 }

@@ -69,11 +69,9 @@
             </div>
             <div><button type="submit" class="btn btn-dark">Submit</button></div>
         </form>
-        {% with messages = get_flashed_messages() %}
-           {% if messages %}
-              {% for message in messages %}
-                 {{ message }}
-              {% endfor %}
+        {% with message = get_flashed_messages() %}
+           {% if message %}
+                 {{ message[0] }}
            {% endif %}
         {% endwith %}
     </div>
