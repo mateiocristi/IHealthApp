@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
 import cryptography as cy
 
-import cryptography
 import querries
 from utils import json_response
 
@@ -13,7 +12,28 @@ app.secret_key = b'_5#y2x"F4Qdu\n\xec]/'
 @app.route("/")
 @app.route("/home")
 def home():  # put application's code here
-    return render_template("home.html")
+    if "username" in session:
+        username = session["username"]
+        user_id = session["user_id"]
+        return render_template(
+            "home.html",
+            username=username,
+            user_id=user_id
+        )
+    return render_template("home.html", username=None)
+
+
+@app.route("/user-profile/<user_id>")
+def user_route(user_id):
+    if "username" in session:
+        username = session["username"]
+        user_id = user_id
+        return render_template(
+            "user_profile.html",
+            username=username,
+            user_id=user_id
+        )
+    return render_template("home.html", username=None)
 
 
 @app.route("/login", methods=["GET", "POST"])
