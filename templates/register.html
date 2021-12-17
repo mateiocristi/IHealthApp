@@ -1,8 +1,9 @@
 {% extends "root.html" %}
 {% block title %} Home {%  endblock %}
 {% block navbar_login_buttons %}
-    {% if username %}
-        <li class="right-items"><a href="{{ url_for("user_profile", user_id=user_id) }}">{{ username }}</a></li>
+    {% if email %}
+        <li class="right-items"><a class="logout-button" href={{ url_for("logout") }}>Logout</a></li>
+        <li class="right-items"><a href="{{ url_for("user_profile", user_id=user_id) }}">{{ email }}</a></li>
     {% else %}
         <li class="right-items"><a href="{{ url_for("login") }}">Login</a></li>
         <li class="right-items"><a href="{{ url_for("register") }}">Register</a></li>
@@ -15,9 +16,6 @@
         <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <div class="row">
-                    <div class="col">
-                        <input type="name" class="form-control" id="username" name="username" placeholder="Username">
-                    </div>
                     <div class="col">
                         <input type="name" class="form-control" id="firstName" name="firstName" placeholder="First name">
                     </div>
@@ -39,9 +37,6 @@
                     </div>
                      <div class="col">
                         <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Birthdate">
-                    </div>
-                     <div class="col">
-                        <input type="cnp" class="form-control" id="cnp" name="cnp" placeholder="CNP">
                     </div>
                 </div>
             </div>

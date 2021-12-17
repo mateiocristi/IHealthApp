@@ -1,8 +1,9 @@
 {% extends "root.html" %}
 {% block title %} Home {%  endblock %}
 {% block navbar_login_buttons %}
-    {% if username %}
-        <li class="right-items"><a href="{{ url_for("user_profile", user_id=user_id) }}">{{ username }}</a></li>
+    {% if email %}
+        <li class="right-items"><a class="logout-button" href={{ url_for("logout") }}>Logout</a></li>
+        <li class="right-items"><a href="{{ url_for("user_profile", user_id=user_id) }}">{{ email }}</a></li>
     {% else %}
         <li class="right-items"><a href="{{ url_for("login") }}">Login</a></li>
         <li class="right-items"><a href="{{ url_for("register") }}">Register</a></li>
@@ -24,6 +25,7 @@
             </div>
             <br>
             <div><button type="submit" class="btn btn-dark">Submit</button></div>
+            <p>{{ message }}</p>
         </form>
         {% with messages = get_flashed_messages() %}
            {% if messages %}
