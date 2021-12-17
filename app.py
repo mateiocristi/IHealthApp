@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
+
+import querries
 from utils import json_response
 
 app = Flask(__name__)
