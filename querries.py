@@ -111,7 +111,7 @@ def add_user(cursor, user):
         0,
         %(cart_id)s
         )
-        RETURNING 'ok'
+        RETURNING 'ok' as message
             ;"""
     cursor.execute(querry, user)
     return cursor.fetchone()
