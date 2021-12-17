@@ -1,14 +1,8 @@
 {% extends "root.html" %}
-{% block title %} Home {%  endblock %}
-{% block navbar_login_buttons %}
-    {% if email %}
-        <li class="right-items"><a class="logout-button" href={{ url_for("logout") }}>Logout</a></li>
-        <li class="right-items"><a class="logout-button" href={{ url_for("logout") }}>Logout</a></li>
-    {% else %}
-        <li class="right-items"><a href="{{ url_for("login") }}">Login</a></li>
-        <li class="right-items"><a href="{{ url_for("register") }}">Register</a></li>
-    {% endif %}
+{% block head %}
+    <script type="module" src="/static/javascript/home_page.js" defer></script>
 {% endblock %}
+{% block title %} Home {%  endblock %}
 {% block content %}
     <div class="card" style="background-color: darkred">
 

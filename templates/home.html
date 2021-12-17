@@ -1,14 +1,5 @@
 {% extends "root.html" %}
 {% block title %} Home {% endblock %}
-{% block navbar_login_buttons %}
-    {% if email %}
-        <li class="right-items"><a class="logout-button" href={{ url_for("logout") }}>Logout</a></li>
-        <li class="right-items"><a href="{{ url_for("user_route", user_id=user_id) }}">{{ email }}</a></li>
-    {% else %}
-        <li class="right-items"><a href="{{ url_for("login") }}">Login</a></li>
-        <li class="right-items"><a href="{{ url_for("register") }}">Register</a></li>
-    {% endif %}
-{% endblock %}
 {% block content %}
     <div class ="live_slider">
         <div class="arrow-btn next-btn" id="previous-arrow"> </div>
