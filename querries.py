@@ -95,7 +95,7 @@ def add_user(cursor, user):
     user.update({"cart_id": cart_id["id"]})
     querry = """
         INSERT INTO users 
-        (first_name, last_name, county, city, address, birth_date, email, phone_number, cnp, username, password, access_level, cart_id)
+        (first_name, last_name, county, city, address, birth_date, email, phone_number, password, cart_id)
         VALUES (
         %(first_name)s,
         %(last_name)s,
@@ -105,10 +105,7 @@ def add_user(cursor, user):
         %(birth_date)s,
         %(email)s,
         %(phone_number)s,
-        %(cnp)s,
-        %(username)s,
         %(password)s,
-        1,
         %(cart_id)s
         )
         RETURNING 'ok' as message

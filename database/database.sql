@@ -94,12 +94,11 @@ create table if not exists users
     birth_date   date,
     email        text,
     phone_number integer,
-    cnp          integer,
-    username     text,
     password     text,
     access_level integer
-        constraint users_access_levels_id_fk
-            references access_levels,
+        default 1
+            constraint users_access_levels_id_fk
+                references access_levels,
     cart_id      integer
 );
 
