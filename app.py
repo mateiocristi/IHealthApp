@@ -22,7 +22,11 @@ def login():
         password = request.form["password"]
         try:
             user = querries.get_user_by_username(username)
-            if username == user["username"] or username == user["email"] and cy.verify_password(password, user["password"]):
+            if (
+                username == user["username"]
+                or username == user["email"]
+                and cy.verify_password(password, user["password"])
+            ):
                 return redirect(url_for("home"))
             else:
                 return render_template("login.html", message="Invalid login")
@@ -33,29 +37,35 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method =="POST":
+    if request.method == "POST":
         user = {
-            "username" : request.form["username"],
-            "first_name" : request.form["firstName"],
-            "last_name" : request.form["lastName"],
-            "email" : request.form["email"],
-            "address" : request.form["address"],
-            "county" : request.form["county"],
-            "city" : request.form["city"],
-            "phone" : request.form["phone"],
-            "birth_date" : request.form["birthdate"],
-            "cnp" : request.form["cnp"],
-            "password" : request.form["password"]
+            "username": request.form["username"],
+            "first_name": request.form["firstName"],
+            "last_name": request.form["lastName"],
+            "email": request.form["email"],
+            "address": request.form["address"],
+            "county": request.form["county"],
+            "city": request.form["city"],
+            "phone": request.form["phone"],
+            "birth_date": request.form["birthdate"],
+            "cnp": request.form["cnp"],
+            "password": request.form["password"],
         }
         password_confirm = request.form["confirmPassword"]
         if user["password"] != password_confirm:
             return render_template(url_for("register"))
-        if not querries.get_user_by_username(user["username"]) and len(user["username"]) > 5 and len(user["password"]) > 5:
+        if (
+            not querries.get_user_by_username(user["username"])
+            and len(user["username"]) > 5
+            and len(user["password"]) > 5
+        ):
 
             password = cy.hash_password(user["password"])
             if querries.add_user(user) == "ok":
                 session.update({"username": user["username"]})
-                session.update({"user_id": querries.get_user_by_username(user["username"])["id"]})
+                session.update(
+                    {"user_id": querries.get_user_by_username(user["username"])["id"]}
+                )
         return redirect(url_for("home"))
     return render_template("register.html")
 
@@ -68,11 +78,15 @@ def api_get_products(category_id, supplier_id):
         if supplier_id == 0:
             pass
         else:
-            products = [product for product in products if product["supplier_id"] == supplier_id]
+            products = [
+                product for product in products if product["supplier_id"] == supplier_id
+            ]
     else:
         products = querries.get_products_with_category_id(category_id)
         if supplier_id != 0:
-            products = [product for product in products if product["supplier_id"] == supplier_id]
+            products = [
+                product for product in products if product["supplier_id"] == supplier_id
+            ]
     return products
 
 
@@ -82,5 +96,5 @@ def api_get_categories():
     return querries.get_all_categories()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(port=8080, debug=True)
