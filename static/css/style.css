@@ -248,10 +248,18 @@ input, label{
 }
 
 .live_slider {
-    height: 20rem;
+    height: 40rem;
+    text-align: center;
     background-color: #6649b8;
+    background-image: url("/static/images/slider/slide_default.png");
     position: relative;
 }
+
+svg {
+    display: inline-block;
+    margin-top: 10px;
+}
+
 .arrow-btn {
     background-color: darkgrey;
     position: absolute;
