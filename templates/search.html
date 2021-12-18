@@ -1,20 +1,38 @@
 {% extends "root.html" %}
 {% block title %} Search {% endblock %}
 {% block head %}
-    <script type="module" src="/static/javascript/home_page.js" async></script>
+    {#    <script type="module" src="/static/javascript/products.js" async></script>#}
 {% endblock %}
 {% block content %}
-    <div class="search-container">
-        {% if products %}
-            <div class="products-container">
-                {% for product in products %}
+    {% if products %}
+        <div class="products-container" style="display: flex">
 
-                {% endfor %}
+        {% for product in products %}
+            <div class="product-card">
+
+                <img class="product-image" src="/static/images/product_{{ product.id }}.jpg" alt="">
+                <a href="{{ url_for("product_route", product_id=product.id) }}">
+                    <div class="card-header">
+                        <h4>{{ product.name }}</h4>
+                        <p class="card-text">{{ product.description }} </p>
+                    </div>
+                </a>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="lead">{{ product.actual_price }}</p>
+                    </div>
+                    <div class="card-text">
+                        <button id="{{ product.id }}" class="btn btn-success btn-add-product">Add to cart
+                        </button>
+                    </div>
+                </div>
             </div>
-        {% endif %}
+        {% endfor %}
+    {% endif %}
+
+</div>
+    <div id="products-collection">
     </div>
-        <div id="products-collection">
-        </div>
     </div>
 
 

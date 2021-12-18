@@ -42,6 +42,10 @@ export function productsPageScript() {
     })
 }
 
+export function searchPageScript() {
+
+}
+
 export function showProducts(products, arg) {
     const products_container = document.querySelector(arg)
     console.log("products: " + products[0])
