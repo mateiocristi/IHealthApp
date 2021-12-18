@@ -1,0 +1,21 @@
+{% extends "root.html" %}
+{% block title %} Search {% endblock %}
+{% block head %}
+    <script type="module" src="/static/javascript/home_page.js" async></script>
+{% endblock %}
+{% block content %}
+    <div class="search-container">
+        {% if products %}
+            <div class="products-container">
+                {% for product in products %}
+
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+        <div id="products-collection">
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,28 +1,46 @@
 
 
-function init() {
+homePageScript();
+
+function homePageScript() {
     const arg = `.products-container`
     const categorySelector = document.querySelector(`#categorySorter`)
     const supplierSelector = document.querySelector(`#supplySorter`)
-    apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
+    try {
+        categorySelector.addEventListener("change", () => {
+            apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
+                showProducts(response, arg)
+            })
+        })
+
+
+        supplierSelector.addEventListener("change", () => {
+        apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
+            showProducts(response, arg)
+        })
+    })
+
+
+        apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
         showProducts(response, arg)
         handleAddProductClick()
     })
-    categorySelector.addEventListener("change", () => {
-        apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
-            showProducts(response, arg)
-        })
-    })
-    supplierSelector.addEventListener("change", () => {
-        apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
-            showProducts(response, arg)
-        })
-    })
+    } catch (e) {
+
+    }
+
+
+
+
 }
 
-init();
-
-
+export function productsPageScript() {
+    const arg = `.products-container`
+    apiGetAllProducts(0, 0).then((response) => {
+        showProducts(response, arg)
+        handleAddProductClick()
+    })
+}
 
 export function showProducts(products, arg) {
     const products_container = document.querySelector(arg)
@@ -66,6 +84,7 @@ export async function apiUpdateCart(product_id, quantity) {
 
 
 export async function apiGetAllProducts(category_id, supplier_id) {
+
     let url = `/api_get_products/${category_id}/${supplier_id}`
     const products =  await apiGet(url, {"category_id": category_id, "supplier_id": supplier_id})
     return products;
