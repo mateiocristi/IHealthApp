@@ -96,7 +96,7 @@ def register():
 @app.route("/search")
 def search():
     search_term = request.args["search"]
-    products, categories, suppliers = querries.search(search_term)
+    products = querries.search(search_term)
     return render_template('')
 
 

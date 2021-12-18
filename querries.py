@@ -329,9 +329,7 @@ def search_in_suppliers(cursor, search_term):
 
 def search(search_term):
     products = search_in_products(search_term)
-    categories = search_in_categories(search_term)
-    suppliers = search_in_suppliers(search_term)
-    return products, categories, suppliers
+    return products
 
 
 @connection.connection_handler
