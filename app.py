@@ -102,7 +102,7 @@ def register():
 def search():
     search_term = request.args["search"]
     products = querries.search(search_term)
-    return render_template('')
+    return render_template('search.html', products=products)
 
 
 @app.route("/logout")

@@ -29,7 +29,7 @@
     {% block head %}
     {% endblock %}
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg ">
             <img class="navbar-brand" id="header-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="iHealth Logo" width="40px">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -37,7 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{{ url_for("home", categories=categories, suppliers=suppliers) }}">Consultation</a>
-                    <a class="nav-item nav-link" href="{{ url_for("home", categories=categories, suppliers=suppliers) }}">Contact</a>
+                    <a class="nav-item nav-link" href="{{ url_for("display_contact", categories=categories, suppliers=suppliers) }}">Contact</a>
                      <a class="nav-item nav-link" href="{{ url_for("home", categories=categories, suppliers=suppliers) }}">Partners</a>
                     <a class="nav-item nav-link" href="{{ url_for("home", categories=categories, suppliers=suppliers) }}">About us</a>
 
