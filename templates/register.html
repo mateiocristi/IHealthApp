@@ -2,7 +2,6 @@
 {% block title %} Home {%  endblock %}
 {% block content %}
     <div class="card">
-        <img id="header-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="iHealth Logo" width="60px">
         <h1 class="display-5">Register User</h1>
         <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
             <div class="form-group">
