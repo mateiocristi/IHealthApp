@@ -54,7 +54,7 @@ label {
   font-size: 24px;
 }
 
-.btn {
+.bttn {
   background-color: #04AA6D;
   color: white;
   padding: 12px;
@@ -66,7 +66,7 @@ label {
   font-size: 17px;
 }
 
-.btn:hover {
+.bttn:hover {
   background-color: #45a049;
 }
 
