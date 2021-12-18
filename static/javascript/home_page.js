@@ -72,7 +72,7 @@ export function showProducts(products, arg) {
                                                     </div>
                                                 </div>`
         let optional = `<p class="lead"><strike>${product.default_price} Lei</strike></p>`
-        if (product.actual_price != product.default_price) {
+        if (product.actual_price !== product.default_price) {
             firstPart = firstPart + optional + secPart
         } else {
             firstPart += secPart

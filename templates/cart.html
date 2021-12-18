@@ -1,15 +1,21 @@
 {% extends "root.html" %}
 {% block title %} Cart {%  endblock %}
 {% block content %}
-    <div class="card">
+    <div class="products-container" style="display: flex; flex-direction: column">
         {% for product in products %}
-            <div class="horizontal-card">
-                <div><img src="/static/images/product_{{ product.product_id }}.jpg" alt=""></div>
-                <div><h2>{{ product.name }}</h2></div>
-                <div><button class="remove-button">Remove</button></div>
+            <div class="cart-card" style="background-color: white">
+                <div style="float: left"><img class = "product-image" style="height: 20%; width: 20%" src="/static/images/product_{{ product.product_id }}.jpg" alt=""></div>
+                <div>
+                    <h2 d>{{ product.name }}</h2></div>
+
+                        <div class="card-text">
+                            <p style="float: right">Quantity: 3</p></div>
+                <div><button class="remove-button" style="float: right; display: inline">Remove</button></div>
             </div>
         {% endfor %}
-        <h2>Total: <p>{{ total }} Lei</p></h2>
+    </div>
+    <div style="text-align: center">
+        <h2>Total: <p style="display: inline-flex">{{ total }} Lei</p></h2>
         <a href="{{ url_for("checkout_route", total=total) }}"><button>Checkout</button></a>
     </div>
 {% endblock %}
