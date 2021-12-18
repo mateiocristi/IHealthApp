@@ -361,12 +361,17 @@ section .product-card {
     background-color: #23232e;
 }
 
-
+.nav-link:hover {
+    color: black;
+}
 /*.card {*/
 
 /*    width: 50%;*/
 /*    height: 50%;*/
 /*}*/
+.card-header:hover {
+    color: red;
+}
 
 .card-big {
 
