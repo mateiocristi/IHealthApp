@@ -12,24 +12,30 @@ app.secret_key = b'_5#y2x"F4Qdu\n\xec]/'
 @app.route("/")
 @app.route("/home")
 def home():  # put application's code here
+    categories = querries.get_all_categories()
+    suppliers = querries.get_all_suppliers()
     if "email" in session:
         email = session["email"]
         user_id = session["user_id"]
-        return render_template("home.html", email=email, user_id=user_id)
-    return render_template("home.html", email=None)
+        return render_template("home.html", email=email, user_id=user_id, categories=categories, suppliers=suppliers)
+    return render_template("home.html", email=None, categories=categories, suppliers=suppliers)
 
 
 @app.route("/user_profile/<user_id>")
 def user_route(user_id):
+    categories = querries.get_all_categories()
+    suppliers = querries.get_all_suppliers()
     if "email" in session:
         email = session["email"]
         user_id = user_id
         return render_template("user_profile.html", email=email, user_id=user_id)
-    return render_template("home.html", email=None)
+    return render_template("home.html", email=None, categories=categories, suppliers=suppliers)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    categories = querries.get_all_categories()
+    suppliers = querries.get_all_suppliers()
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -41,7 +47,7 @@ def login():
             ):
                 print("login ok")
                 session.update({"email": email, "user_id": user["id"]})
-                return redirect(url_for("home", email=email))
+                return redirect(url_for("home", email=email, categories=categories, suppliers=suppliers))
             else:
                 return render_template("login.html", message="Invalid login")
         except:
@@ -51,6 +57,8 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    categories = querries.get_all_categories()
+    suppliers = querries.get_all_suppliers()
     if request.method == "POST":
         user = {
             "first_name": request.form["firstName"],
@@ -81,7 +89,7 @@ def register():
                 session.update(
                     {"user_id": querries.get_user_by_email(user["email"])["id"]}
                 )
-        return redirect(url_for("home"))
+        return redirect(url_for("home", categories=categories, suppliers=suppliers))
     return render_template("register.html")
 
 
@@ -94,22 +102,42 @@ def search():
 
 @app.route("/logout")
 def logout():
+    categories = querries.get_all_categories()
+    suppliers = querries.get_all_suppliers()
     # remove the username from the session if it's there
     session.pop("email", None)
     session.pop("user_id", None)
-    return redirect(url_for("home"))
+    return redirect(url_for("home", categories=categories, suppliers=suppliers))
 
 
 @app.route("/cart")
 def cart_route():
     if not session["user_id"]:
-        return redirect(url_for("home"))
+        categories = querries.get_all_categories()
+        suppliers = querries.get_all_suppliers()
+        return redirect(url_for("home", categories=categories, suppliers=suppliers))
     user = querries.get_user_by_id(session["user_id"])
     print("cart_id {}", user["cart_id"])
-    products = querries.get_all_cart_products_for_cart(user["cart_id"])
+    products = querries.get_cart_products_for_user(user)
+    total = 0
+    for product in products:
+        if product["quantity"] > 0:
+            total += product["quantity"] * product["actual_price"]
+    return render_template("cart.html", products=products, total=total)
 
-    print(products)
-    return render_template("cart.html", products=products)
+
+@app.route("/checkout", methods=["POST", "GET"])
+def checkout_route():
+    total = request.args["total"]
+    if request.method == "POST":
+        categories = querries.get_all_categories()
+        suppliers = querries.get_all_suppliers()
+        if not session["user_id"]:
+            return redirect(url_for("home"))
+            # handle checkout
+        return redirect(url_for("home", email=session["email"], user_id=session["user_id"], categories=categories, suppliers=suppliers))
+    user = querries.get_user_by_id(session["user_id"])
+    return render_template("checkout.html", user_id=user["id"], email=user["email"], total=total)
 
 
 @app.route("/product/<product_id>")
