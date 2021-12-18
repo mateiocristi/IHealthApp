@@ -37,7 +37,7 @@
                 </form>
             </div>
             {% if email %}
-                <a class="nav-item nav-link" href="{{ url_for("cart_route", user_id=user_id) }}"></a>
+                <a class="nav-item nav-link" href="{{ url_for("cart_route", user_id=user_id) }}">Cart</a>
                         <a class="nav-item nav-link" href="{{ url_for("user_route", user_id=user_id) }}">{{ email }}</a>
                         <a class="nav-item nav-link" href="{{ url_for("logout") }}">Logout</a>
             {% else %}
