@@ -293,9 +293,9 @@ def search_in_products(cursor, search_term):
     querry = """
         SELECT * FROM products 
         WHERE 
-                name LIKE %(search_term)s
+                LOWER(name) LIKE LOWER(%(search_term)s)
             OR
-                description LIKE %(search_term)s
+                LOWER(description) LIKE LOWER(%(search_term)s)
             ;"""
     cursor.execute(querry, {"search_term": f"%{search_term}%"})
     return cursor.fetchall()
@@ -306,9 +306,9 @@ def search_in_categories(cursor, search_term):
     querry = """
         SELECT * FROM categories
         WHERE
-                name LIKE %(search_term)s
+                LOWER(name) LIKE LOWER(%(search_term)s)
             OR
-                description LIKE %(search_term)s
+                LOWER(description) LIKE LOWER(%(search_term)s)
             ;"""
     cursor.execute(querry, {"search_term": f"%{search_term}%"})
     return cursor.fetchall()
@@ -319,9 +319,9 @@ def search_in_suppliers(cursor, search_term):
     querry = """
         SELECT * FROM suppliers
         WHERE
-                name LIKE %(search_term)s
+                LOWER(name) LIKE LOWER(%(search_term)s)
             OR
-                description LIKE %(search_term)s
+                LOWER(description) LIKE LOWER(%(search_term)s)
             ;"""
     cursor.execute(querry, {"search_term": f"%{search_term}%"})
     return cursor.fetchall()
