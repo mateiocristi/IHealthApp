@@ -6,7 +6,7 @@
     <title>iHealth</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
-{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">#}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_form.css') }}">
     {% block head %}
     {% endblock %}
@@ -23,13 +23,7 @@
                     <a class="nav-item nav-link" href="{{ url_for("home") }}">Tags</a>
                     <a class="nav-item nav-link" href="{{ url_for("home") }}">Contact</a>
                     <a class="nav-item nav-link" href="{{ url_for("home") }}">About</a>
-                    {% if username %}
-                        <a class="nav-item nav-link" href="{{ url_for("user_route", user_id=user_id) }}">{{ username }}</a>
-                        <a class="nav-item nav-link" href="{{ url_for("logout_user") }}">Logout</a>
-                    {% else %}
-                        <a class="nav-item nav-link" href="{{ url_for("display_login") }}">Login</a>
-                        <a class="nav-item nav-link" href="{{ url_for("display_register") }}">Register</a>
-                    {% endif %}
+
                 </div>
                 <form class="form-inline">
                     <div class="row">
@@ -42,6 +36,13 @@
                     </div>
                 </form>
             </div>
+            {% if email %}
+                        <a class="nav-item nav-link" href="{{ url_for("user_route", user_id=user_id) }}">{{ email }}</a>
+                        <a class="nav-item nav-link" href="{{ url_for("logout") }}">Logout</a>
+            {% else %}
+                        <a class="nav-item nav-link right-items" href="{{ url_for("login") }}">Login</a>
+                        <a class="nav-item nav-link right-items" href="{{ url_for("register") }}">Register</a>
+            {% endif %}
         </nav>
 
         {% block content %}

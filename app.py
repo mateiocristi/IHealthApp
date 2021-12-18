@@ -102,6 +102,14 @@ def logout():
     return redirect(url_for("home"))
 
 
+@app.route("/product/<product_id>")
+def product_route(product_id):
+    img_path = f"/product_{product_id}.jpg"
+    product = querries.get_product_by_id(product_id)
+    print("prod id is " + product_id)
+    return render_template("product.html", product=product, img_path=img_path)
+
+
 @app.route("/api_get_products/<int:category_id>/<int:supplier_id>")
 @json_response
 def api_get_products(category_id, supplier_id):
@@ -126,6 +134,22 @@ def api_get_products(category_id, supplier_id):
 @json_response
 def api_get_categories():
     return querries.get_all_categories()
+
+
+@app.route("/api_get_cart")
+@json_response
+def api_get_cart():
+    user_id = session["user_id"]
+    user = querries.get_user_by_id(user_id)
+    cart_products = querries.get_cart_products(user["cart_id"])
+    return cart_products
+
+
+@app.route("/api_update_cart/<int:product_id>/<int:quantity>", methods=["PUT"])
+def api_update_cart(product_id, quantity):
+    print("updating cart")
+    user = querries.get_user_by_id(session["user_id"])
+    querries.update_cart(user, product_id, quantity)
 
 
 if __name__ == "__main__":

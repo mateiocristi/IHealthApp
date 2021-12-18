@@ -38,6 +38,7 @@ ol {
 body {
     color: white;
     background-color: grey;
+    /*text-align: center;*/
     /*background-image: url("https://www.valtech.com/4a5e64/globalassets/00-global/02-images/04-insights/14-essential-questions-for-your-digital-workplace/question-mark-1872665.jpg");*/
     background-size: 100% auto;
     padding: 0;
@@ -270,7 +271,7 @@ input, label{
 
 .products-container {
     display: grid;
-    padding: 2rem 10rem;
+    padding: 2rem 20rem;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(auto-fill, 1fr);
     grid-column-gap: 10px;
@@ -296,6 +297,40 @@ input, label{
 #products-collection {
     width: max-content;
     height: 20rem;
+}
+
+section .card {
+    background-color: #fff;
+    min-width: 100%;
+    min-height: 200px;
+    display: flex;
+}
+
+section .product-card {
+    min-width: 200px;
+    background-color: #23232e;
+}
+
+
+/*.card {*/
+
+/*    width: 50%;*/
+/*    height: 50%;*/
+/*}*/
+
+.card-big {
+
+    text-align: center;
+    margin: 5rem 10rem;
+}
+
+.big-product-image {
+
+}
+
+.card .big-product-image {
+    width: 50%;
+    height: 50%;
 }
 
 
