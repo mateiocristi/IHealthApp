@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 import cryptography as cy
 
@@ -11,7 +11,7 @@ app.secret_key = b'_5#y2x"F4Qdu\n\xec]/'
 
 @app.route("/")
 @app.route("/home")
-def home():  # put application's code here
+def home():
     categories = querries.get_all_categories()
     suppliers = querries.get_all_suppliers()
     if "email" in session:
@@ -28,7 +28,8 @@ def user_route(user_id):
     if "email" in session:
         email = session["email"]
         user_id = user_id
-        return render_template("user_profile.html", email=email, user_id=user_id)
+        user_data = querries.get_user_by_email(email)
+        return render_template("user_profile.html", email=email, user_id=user_id, user=user_data)
     return render_template("home.html", email=None, categories=categories, suppliers=suppliers)
 
 
@@ -40,19 +41,19 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         try:
-            print("try ok")
             user = querries.get_user_by_email(email)
             if email == user["email"] and cy.verify_password(
                 password, user["password"]
             ):
-                print("login ok")
                 session.update({"email": email, "user_id": user["id"]})
                 return redirect(url_for("home", email=email, categories=categories, suppliers=suppliers))
             else:
-                return render_template("login.html", message="Invalid login")
+                flash('Password and/ or user are incorrect')
+                return render_template("login.html")
         except:
-            return render_template("login.html", message="Invalid login")
-    return render_template("login.html", message=None)
+            flash('Password and/ or user are incorrect')
+            return render_template("login.html")
+    return render_template("login.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -73,23 +74,16 @@ def register():
         }
         password_confirm = request.form["confirmPassword"]
         if user["password"] != password_confirm:
+            flash("Passwords don't match")
             return render_template(url_for("register"))
-        print("password ok")
-        if (
-            not querries.get_user_by_email(user["email"])
-            and len(user["email"]) > 5
-            and len(user["password"]) > 5
-        ):
-            print("user ok")
+        if querries.get_user_by_email(user["email"]) is None and len(user["email"]) > 5 and len(user["password"]) > 5:
             user["password"] = cy.hash_password(user["password"])
             resp = querries.add_user(user)["message"]
-            print("response: " + resp)
             if resp == "ok":
                 session.update({"email": user["email"]})
-                session.update(
-                    {"user_id": querries.get_user_by_email(user["email"])["id"]}
-                )
-        return redirect(url_for("home", categories=categories, suppliers=suppliers))
+                session.update({"user_id": querries.get_user_by_email(user["email"])["id"]})
+                return redirect(url_for("home", categories=categories, suppliers=suppliers))
+        flash("Please enter a valid password")
     return render_template("register.html")
 
 
@@ -104,7 +98,6 @@ def search():
 def logout():
     categories = querries.get_all_categories()
     suppliers = querries.get_all_suppliers()
-    # remove the username from the session if it's there
     session.pop("email", None)
     session.pop("user_id", None)
     return redirect(url_for("home", categories=categories, suppliers=suppliers))
@@ -191,9 +184,23 @@ def api_get_cart():
 @app.route("/api_update_cart/<int:product_id>/<int:quantity>", methods=["PUT"])
 @json_response
 def api_update_cart(product_id, quantity):
-    print("updating cart")
     user = querries.get_user_by_id(session["user_id"])
     querries.update_cart(user, product_id, quantity)
+
+
+@app.route("/contact")
+def display_contact():
+    return render_template('contact.html')
+
+
+@app.route("/about-us")
+def display_about():
+    return render_template('aboutus.html')
+
+
+@app.route("/partners")
+def display_partners():
+    return render_template('partners.html')
 
 
 if __name__ == "__main__":

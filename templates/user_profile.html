@@ -1,7 +1,16 @@
 {% extends "root.html" %}
 {% block title %} Home {%  endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_profile.css') }}">
+{% endblock %}
 {% block content %}
-    <div class="card" style="background-color: darkred">
-
+    <div class="container justify-content-center">
+        <div class="card p-4">
+            <div class="image d-flex flex-column justify-content-center align-items-center">
+                <img src="{{ url_for('static', filename='images/user.png') }}" height="100px">
+                <span class="name mt-3">{{ user.first_name }} {{ user.last_name }}</span>
+                <div class="text mt-3"><span><strong>City:</strong> {{ user.city }} <strong>County:</strong> {{ user.county }} <strong>Address:</strong> {{ user.address }}<br> <strong>Phone:</strong> {{ user.phone_number }} <strong>Email:</strong> {{ user.email }}</span> </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
