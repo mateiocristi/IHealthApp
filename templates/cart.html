@@ -1,5 +1,5 @@
 {% extends "root.html" %}
-{% block title %} Home {%  endblock %}
+{% block title %} Cart {%  endblock %}
 {% block content %}
     <div class="card">
         {% for product in products %}
@@ -9,7 +9,7 @@
                 <div><button class="remove-button">Remove</button></div>
             </div>
         {% endfor %}
-        <button>Checkout</button>
+        <h2>Total: <p>{{ total }} Lei</p></h2>
+        <a href="{{ url_for("checkout_route", total=total) }}"><button>Checkout</button></a>
     </div>
-
 {% endblock %}

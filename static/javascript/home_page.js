@@ -1,15 +1,28 @@
 
 
 function init() {
-    let arg = `.products-container`
-    alert("ok")
-    apiGetAllProducts().then((response) => {
+    const arg = `.products-container`
+    const categorySelector = document.querySelector(`#categorySorter`)
+    const supplierSelector = document.querySelector(`#supplySorter`)
+    apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
         showProducts(response, arg)
         handleAddProductClick()
+    })
+    categorySelector.addEventListener("change", () => {
+        apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
+            showProducts(response, arg)
+        })
+    })
+    supplierSelector.addEventListener("change", () => {
+        apiGetAllProducts(categorySelector.value, supplierSelector.value).then((response) => {
+            showProducts(response, arg)
+        })
     })
 }
 
 init();
+
+
 
 export function showProducts(products, arg) {
     const products_container = document.querySelector(arg)
@@ -52,9 +65,7 @@ export async function apiUpdateCart(product_id, quantity) {
 }
 
 
-export async function apiGetAllProducts() {
-    let category_id = 0
-    let supplier_id = 0
+export async function apiGetAllProducts(category_id, supplier_id) {
     let url = `/api_get_products/${category_id}/${supplier_id}`
     const products =  await apiGet(url, {"category_id": category_id, "supplier_id": supplier_id})
     return products;
