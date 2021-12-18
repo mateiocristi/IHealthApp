@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
     {% if products %}
-        <div class="products-container" style="display: flex">
+        <div class="products-container search" style="display: flex">
 
         {% for product in products %}
             <div class="product-card">
@@ -14,12 +14,15 @@
                 <a href="{{ url_for("product_route", product_id=product.id) }}">
                     <div class="card-header">
                         <h4>{{ product.name }}</h4>
-                        <p class="card-text">{{ product.description }} </p>
                     </div>
                 </a>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="lead">{{ product.actual_price }}</p>
+                        {% if product.actual_price != product.default_price %}
+                        <p class="lead"><strike>{{product.default_price}} Lei</strike></p>
+                        {% endif %}
+                        <h1 class="lead price">{{ product.actual_price }} Lei</h1>
+
                     </div>
                     <div class="card-text">
                         <button id="{{ product.id }}" class="btn btn-success btn-add-product">Add to cart
