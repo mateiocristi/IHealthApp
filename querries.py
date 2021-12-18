@@ -80,7 +80,7 @@ def get_all_categories(cursor):
 @connection.connection_handler
 def add_cart(cursor):
     querry = """
-        INSERT INTO carts (quantity_product_id) VALUES ('') RETURNING id
+        INSERT INTO carts (id) VALUES (default) RETURNING id
             ;"""
     cursor.execute(querry)
     return cursor.fetchone()
@@ -112,21 +112,83 @@ def add_user(cursor, user):
 
 
 @connection.connection_handler
-def get_cart_products(cursor, cart_id):
+def get_all_orders(cursor):
     querry = """
-        SELECT quantity_product_id FROM carts WHERE id = %(cart_id)s
-    ;"""
+        SELECT * FROM orders
+            ;"""
+    cursor.execute(querry)
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_order_by_id(cursor, order_id):
+    querry = """
+        SELECT * FROM orders WHERE id = %(id)s
+            ;"""
+    cursor.execute(querry, {"id": order_id})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_order_by_user_id(cursor, user_id):
+    querry = """
+        SELECT * FROM orders WHERE user_id = %(user_id)s
+            ;"""
+    cursor.execute(querry, {"user_id": user_id})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_all_cart_products_for_cart(cursor, cart_id):
+    querry = """
+            SELECT * FROM cart_products WHERE cart_id = %(cart_id)s
+                ;"""
     cursor.execute(querry, {"cart_id": cart_id})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_cart_product_for_cart_by_product_id(cursor, cart_id, product_id):
+    querry = """
+            SELECT * FROM cart_products WHERE cart_id = %(cart_id)s AND product_id = %(product_id)s
+                ;"""
+    cursor.execute(querry, {"cart_id": cart_id, "product_id": product_id})
     return cursor.fetchone()
 
 
 @connection.connection_handler
-def update_cart(cursor, user, product_id, quantity):
-    cart = f"{get_cart_products()['quantity_product_id']},{quantity}_{product_id}"
+def delete_all_cart_products_by_cart_id(cursor, cart_id):
     querry = """
-        UPDATE carts 
-        SET quantity_product_id = %(cart)s
-        WHERE id=%(cart_id)s
+        DELETE FROM cart_products WHERE cart_id = %(cart_id)s
             ;"""
-    user.update({"cart": cart})
-    cursor.execute(querry, user)
+    cursor.execute(querry, {"cart_id": cart_id})
+
+
+@connection.connection_handler
+def delete_cart_products_by_cart_id_and_product_id(cursor, cart_id, product_id):
+    querry = """
+            DELETE FROM cart_products WHERE cart_id = %(cart_id)s AND product_id = %(product_id)s
+                ;"""
+    cursor.execute(querry, {"cart_id": cart_id, "product_id": product_id})
+
+
+@connection.connection_handler
+def update_cart(cursor, user, product_id, quantity):
+    actual_product_quantity = get_cart_product_for_cart_by_product_id(
+        user["cart_id"], product_id
+    )
+    if actual_product_quantity:
+        quantity += int(actual_product_quantity["quantity"])
+        delete_cart_products_by_cart_id_and_product_id(user["cart_id"], product_id)
+    querry = """
+        INSERT INTO cart_products VALUES 
+        (
+            %(product_id)s,
+            %(quantity)s,
+            %(cart_id)s
+        )
+            ;"""
+    cursor.execute(
+        querry,
+        {"product_id": product_id, "quantity": quantity, "user_id": user["user_id"]},
+    )

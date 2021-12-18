@@ -15,11 +15,7 @@ def home():  # put application's code here
     if "email" in session:
         email = session["email"]
         user_id = session["user_id"]
-        return render_template(
-            "home.html",
-            email=email,
-            user_id=user_id
-        )
+        return render_template("home.html", email=email, user_id=user_id)
     return render_template("home.html", email=None)
 
 
@@ -28,11 +24,7 @@ def user_route(user_id):
     if "email" in session:
         email = session["email"]
         user_id = user_id
-        return render_template(
-            "user_profile.html",
-            email=email,
-            user_id=user_id
-        )
+        return render_template("user_profile.html", email=email, user_id=user_id)
     return render_template("home.html", email=None)
 
 
@@ -44,9 +36,8 @@ def login():
         try:
             print("try ok")
             user = querries.get_user_by_email(email)
-            if (
-                email == user["email"]
-                and cy.verify_password(password, user["password"])
+            if email == user["email"] and cy.verify_password(
+                password, user["password"]
             ):
                 print("login ok")
                 session.update({"email": email, "user_id": user["id"]})
