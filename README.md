@@ -1,5 +1,5 @@
 Link-uri folosite:
-
+    app.smartsupp.com
     w3school.com
     getbootstrap.com
     "partners'" websites (nurofen, upso, fares etc.)
