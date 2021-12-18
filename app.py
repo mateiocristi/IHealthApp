@@ -37,6 +37,16 @@ def display_contact():
     return render_template('contact.html')
 
 
+@app.route("/about-us")
+def display_about():
+    return render_template('aboutus.html')
+
+
+@app.route("/partners")
+def display_partners():
+    return render_template('partners.html')
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     categories = querries.get_all_categories()

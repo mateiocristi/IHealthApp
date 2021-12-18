@@ -1,0 +1,39 @@
+{% extends 'root.html' %}
+{% block title %} Partners {%  endblock %}
+{% block content %}
+    <div class="partners-card">
+        <div class="logo">
+            <h3 class="display-8 partners-header">We couldn't be <strong>us</strong> without <strong>you</strong> and our <strong>partners</strong>:</h3>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-boiron.png') }}" width="100px">
+            </div>
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-ceta.png') }}" width="100px">
+            </div>
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-dacia-plant-full.png') }}" width="100px">
+            </div>
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-fares.png') }}" width="100px">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-gsk.png') }}" width="100px">
+            </div>
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-nurofen.png') }}" width="100px">
+            </div>
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-upsa.png') }}" width="100px">
+            </div>
+            <div class="col logo">
+                <img src="{{ url_for('static', filename='images/partners/logo-urgo.png') }}" width="100px">
+            </div>
+        </div>
+    </div>
+{% endblock %}
