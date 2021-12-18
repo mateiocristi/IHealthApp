@@ -53,30 +53,32 @@ export function showProducts(products, arg) {
     products_container.innerHTML = "";
     for (let product of products) {
         let imgPath = `/product_${product.id}.jpg`
-        products_container.insertAdjacentHTML("beforeend", `
-                                            
-                                                <div class="product-card"  >
+        let firstPart = `<div class="product-card"  >
                                                     
                                                     <img class="product-image" src="/static/images${imgPath}" alt=""> 
                                                         <a href="/product/${product.id}">
                                                             <div class="card-header">
                                                                 <h4>${product.name}</h4> 
-                                                                <p class="card-text">${product.description} </p>                                           
+                                                                                                           
                                                             </div>
                                                         </a>
                                                     <div class="card-body">
-                                                        <div class="card-text">
-                                                            <p class="lead">${product.actual_price}</p>
+                                                        <div class="card-text">`
+        let secPart = `<h1 class="lead price">${product.actual_price} Lei</h1>
                                                         </div>
                                                         <div class="card-text">
                                                             <button id="${product.id}" class="btn btn-success btn-add-product" >Add to cart</button>
                                                         </div>
                                                     </div>
-                                                </div>
-                                           
-                                            
-                                            
-                                            `)
+                                                </div>`
+        let optional = `<p class="lead"><strike>${product.default_price} Lei</strike></p>`
+        if (product.actual_price != product.default_price) {
+            firstPart = firstPart + optional + secPart
+        } else {
+            firstPart += secPart
+        }
+
+        products_container.insertAdjacentHTML("beforeend",firstPart)
     }
 }
 

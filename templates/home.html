@@ -2,40 +2,65 @@
 {% block title %} Home {% endblock %}
 {% block head %}
     <script type="module" src="/static/javascript/home_page.js" async></script>
-    <link href="src/slideshow.css" rel="stylesheet">
-    <script src="src/slideshow.js"></script>
 {% endblock %}
 {% block content %}
-    <div class="live_slider">
-        <span class="arrow-btn" id="previous-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-caret-left"
-                                                         viewBox="0 0 16 16">
-  <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
-</svg></span>
-        <span class="arrow-btn" id="next-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
-  <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
-</svg></span>
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner live_slider">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img src="/static/images/slider/slide_default.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+
+      </div>
     </div>
-    <div>
+    <div class="carousel-item" data-bs-interval="2000">
+      <img src="/static/images/slider/slide_3.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/images/slider/slide_2.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+    <div class="home-content">
         <label>Select a category</label>
-        <select id="categorySorter">
-            <option value='0' selected="selected">All</option>
+
+            <select id="categorySorter">
+                <option value='0' selected="selected">All</option>
 
 
-            {% for category in categories %}
+                {% for category in categories %}
 
-                <option value="{{ category.id }}">{{ category.name }}</option>
+                    <option value="{{ category.id }}">{{ category.name }}</option>
 
-            {% endfor %}
-        </select>
+                {% endfor %}
+            </select>
+
         <label>Select a supplier</label>
+
         <select id="supplySorter">
             <option value='0' selected="selected">All</option>
             {% for supplier in suppliers %}
                 <option value={{ supplier.id }}>{{ supplier.name }}</option>
             {% endfor %}
         </select>
+
         <div class="products-container">
             <div id="sub-title">
                 <h2>Products</h2>
