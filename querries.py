@@ -195,6 +195,15 @@ def update_cart(cursor, user, product_id, quantity):
 
 
 @connection.connection_handler
+def get_cart_products_for_user(cursor, user):
+    querry = """
+        SELECT * FROM cart_products,products WHERE cart_id=%(cart_id)s AND cart_products.product_id=products.id
+        ;"""
+    cursor.execute(querry, user)
+    return cursor.fetchall()
+
+
+@connection.connection_handler
 def get_order_products_by_order_id(cursor, order_id):
     querry = """
         SELECT * FROM order_products WHERE order_id = %(order_id)s
@@ -248,6 +257,13 @@ def insert_order_products(cursor, products, order_id):
         )
 
 
+def place_order(user, payment_type):
+    order_id = insert_order(user, payment_type)["id"]
+    products = get_all_cart_products_for_cart(user["cart_id"])
+    insert_order_products(products, order_id)
+    delete_all_cart_products_by_cart_id(user["cart_id"])
+
+
 @connection.connection_handler
 def get_all_suppliers(cursor):
     querry = """
@@ -255,3 +271,18 @@ def get_all_suppliers(cursor):
             ;"""
     cursor.execute(querry)
     return cursor.fetchall()
+
+
+@connection.connection_handler
+def insert_supplier(cursor, supplier):
+    querry = """
+        INSERT INTO suppliers ( name, description, phone_number, email, website) VALUES
+        (
+            %(name)s,
+            %(description)s,
+            %(phone_number)s,
+            %(email)s,
+            %(website)s
+        ) 
+            ;"""
+    cursor.execute(querry, supplier)
