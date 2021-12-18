@@ -190,7 +190,7 @@ def update_cart(cursor, user, product_id, quantity):
             ;"""
     cursor.execute(
         querry,
-        {"product_id": product_id, "quantity": quantity, "user_id": user["cart_id"]},
+        {"product_id": product_id, "quantity": quantity, "cart_id": user["cart_id"]},
     )
 
 
