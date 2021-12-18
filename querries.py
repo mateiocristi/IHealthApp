@@ -57,7 +57,7 @@ def get_products_by_supplier(cursor, supplier_id):
 
 
 @connection.connection_handler
-def get_products_by_id(cursor, product_id):
+def get_product_by_id(cursor, product_id):
     querry = """
                 SELECT *
                 FROM products

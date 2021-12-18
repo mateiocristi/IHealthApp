@@ -127,6 +127,12 @@ def api_get_categories():
     return querries.get_all_categories()
 
 
+@app.route("/api_get_suppliers")
+@json_response
+def api_get_suppliers():
+    return querries.get_all_suppliers()
+
+
 @app.route("/api_get_cart")
 @json_response
 def api_get_cart():

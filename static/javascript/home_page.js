@@ -19,13 +19,16 @@ export function showProducts(products, arg) {
     for (let product of products) {
         let imgPath = `/product_${product.id}.jpg`
         products_container.insertAdjacentHTML("beforeend", `
-                                            <a href="/product/${product.id}">
+                                            
                                                 <div class="product-card"  >
+                                                    
                                                     <img class="product-image" src="/static/images${imgPath}" alt=""> 
-                                                    <div class="card-header">
-                                                        <h4>${product.name}</h4> 
-                                                        <p class="card-text">${product.description} </p>                                           
-                                                    </div>
+                                                        <a href="/product/${product.id}">
+                                                            <div class="card-header">
+                                                                <h4>${product.name}</h4> 
+                                                                <p class="card-text">${product.description} </p>                                           
+                                                            </div>
+                                                        </a>
                                                     <div class="card-body">
                                                         <div class="card-text">
                                                             <p class="lead">${product.actual_price}</p>
@@ -35,7 +38,7 @@ export function showProducts(products, arg) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </a>
+                                           
                                             
                                             
                                             `)
