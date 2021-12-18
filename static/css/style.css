@@ -36,11 +36,11 @@ ol {
 }
 
 body {
-    color: white;
+    color: black;
     background-color: grey;
     /*text-align: center;*/
     /*background-image: url("https://www.valtech.com/4a5e64/globalassets/00-global/02-images/04-insights/14-essential-questions-for-your-digital-workplace/question-mark-1872665.jpg");*/
-    background-size: 100% auto;
+    /*background-size: 100% auto;*/
     padding: 0;
     margin-top: 0;
     margin-right: 0;
@@ -86,7 +86,8 @@ a:hover {
 }
 
 a {
-    color: white;
+    color: black;
+    text-decoration: none;
 }
 
 input, label{
@@ -112,6 +113,12 @@ input, label{
     padding: 0;
     overflow: hidden;
     background-color: var(--bg-primary);
+}
+
+.nav-item {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .navbar li {
@@ -155,7 +162,6 @@ input, label{
     width: max-content;
     height: 5rem;
 }
-
 
 .search-form{
     height: 16px;
@@ -249,10 +255,12 @@ input, label{
 
 .live_slider {
     height: 40rem;
-    text-align: center;
     background-color: #6649b8;
-    background-image: url("/static/images/slider/slide_default.png");
     position: relative;
+}
+.live_slider img {
+    height: 40rem;
+    object-fit: cover;
 }
 
 svg {
@@ -282,19 +290,26 @@ svg {
     padding: 2rem 20rem;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(auto-fill, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
 
 }
 
 .product-card {
     display: grid;
-    background-color: #23232e;
+    background-color: white;
     justify-content: center;
     padding: 10px;
-    color: white;
+    color: black;
     line-height: 1;
-    border-radius: 5px;
+    border-radius: 9px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    cursor: pointer;
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
 }
 
 .product-image {
@@ -341,10 +356,33 @@ section .product-card {
     height: 50%;
 }
 
+.home-content {
+    background-color: #dee2e6;
+    text-align: center;
+}
+
 
 h2 {
     text-align: center;
 }
+
+.card-text {
+    display: block;
+
+}
+
+.btn-success {
+    width: 300px;
+}
+
+.price {
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Monaco', 'Arial', 'Times New Roman';
+}
+
+
 
 
 
