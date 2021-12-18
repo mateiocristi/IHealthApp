@@ -93,6 +93,13 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/search")
+def search():
+    search_term = request.args["search"]
+    products, categories, suppliers = querries.search(search_term)
+    return render_template('')
+
+
 @app.route("/logout")
 def logout():
     categories = querries.get_all_categories()

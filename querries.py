@@ -286,3 +286,59 @@ def insert_supplier(cursor, supplier):
         ) 
             ;"""
     cursor.execute(querry, supplier)
+
+
+@connection.connection_handler
+def search_in_products(cursor, search_term):
+    querry = """
+        SELECT * FROM products 
+        WHERE 
+                name LIKE %(search_term)s
+            OR
+                description LIKE %(search_term)s
+            ;"""
+    cursor.execute(querry, {"search_term": f"%{search_term}%"})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def search_in_categories(cursor, search_term):
+    querry = """
+        SELECT * FROM categories
+        WHERE
+                name LIKE %(search_term)s
+            OR
+                description LIKE %(search_term)s
+            ;"""
+    cursor.execute(querry, {"search_term": f"%{search_term}%"})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def search_in_suppliers(cursor, search_term):
+    querry = """
+        SELECT * FROM suppliers
+        WHERE
+                name LIKE %(search_term)s
+            OR
+                description LIKE %(search_term)s
+            ;"""
+    cursor.execute(querry, {"search_term": f"%{search_term}%"})
+    return cursor.fetchall()
+
+
+def search(search_term):
+    products = search_in_products(search_term)
+    categories = search_in_categories(search_term)
+    suppliers = search_in_suppliers(search_term)
+    return products, categories, suppliers
+
+
+@connection.connection_handler
+def get_sales(cursor):
+    querry = """
+        SELECT id, name, description, stock, default_price, actual_price, rating, category_id, supplier_id, 
+        (default_price-products.actual_price) as sale FROM products ORDER BY sale DESC LIMIT 3
+            ;"""
+    cursor.execute(querry)
+    return cursor.fetchall()

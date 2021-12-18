@@ -1,9 +1,6 @@
 drop table if exists phone_number_prefixes CASCADE;
 drop table if exists cities CASCADE;
 drop table if exists counties CASCADE;
-drop table if exists support_sessions_messages CASCADE;
-drop table if exists messages CASCADE;
-drop table if exists support_session CASCADE;
 drop table if exists consultations CASCADE;
 drop table if exists subscriptions CASCADE;
 drop table if exists orders CASCADE;
@@ -161,18 +158,6 @@ create table if not exists consultations
 );
 
 
-create table if not exists support_session
-(
-    id             serial
-        constraint support_session_pk
-            primary key,
-    user_id        integer
-        constraint support_session_users_id_fk
-            references users,
-    suport_user_id integer
-        constraint support_session_users_id_fk_2
-            references users
-);
 
 create table cart_products
 (
@@ -185,34 +170,7 @@ create table cart_products
             references carts
 );
 
--- alter table cart_products
---     owner to admin;
 
-
-
-
-create table if not exists messages
-(
-    id      serial
-        constraint messages_pk
-            primary key,
-    user_id integer
-        constraint messages_users_id_fk
-            references users,
-    message text
-);
-
-
-
-create table if not exists support_sessions_messages
-(
-    session_id integer
-        constraint "support_sessions_messages:_support_session_id_fk"
-            references support_session,
-    message_id integer
-        constraint "support_sessions_messages:_messages_id_fk"
-            references messages
-);
 
 create table cart_products
 (
