@@ -8,17 +8,23 @@
         <div class="arrow-btn next-btn" id="previous-arrow"> </div>
         <div class="arrow-btn prev_btn" id="next-arrow"> </div>
     </div>
-    <div >
+    <div>
         <label>Select a category</label>
         <select id = "categorySorter">
-                <option value='0'>All</option>
+
+
+                    <option value='0' selected="selected">All</option>
+
+
                 {% for category in categories %}
-                     <option value={{ category.id }}>{{ category.name }}</option>
+
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+
                 {% endfor %}
             </select>
         <label>Select a supplier</label>
         <select id = "supplySorter">
-                <option value='0'>All</option>
+                <option value='0' selected="selected">All</option>
                 {% for supplier in suppliers %}
                      <option value={{ supplier.id }}>{{ supplier.name }}</option>
                 {% endfor %}

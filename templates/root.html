@@ -38,10 +38,10 @@
                     <a class="nav-item nav-link" href="{{ url_for("home", categories=categories, suppliers=suppliers) }}">About us</a>
 
                 </div>
-                <form class="form-inline">
+                <form class="form-inline" action="{{ url_for("search") }}">
                     <div class="row">
                         <div class="col">
-                            <input class="form-control mr-sm-2 navbar-right" type="search" placeholder="Search" aria-label="Search">
+                            <input name="search" class="form-control mr-sm-2 navbar-right" type="search" placeholder="Search" aria-label="Search">
                         </div>
                         <div class="col">
                             <button class="btn btn-outline-light" id="search" type="submit">Search</button>
