@@ -93,11 +93,22 @@ def logout():
     return redirect(url_for("home"))
 
 
+@app.route("/cart")
+def cart_route():
+    if not session["user_id"]:
+        return redirect(url_for("home"))
+    user = querries.get_user_by_id(session["user_id"])
+    print("cart_id {}", user["cart_id"])
+    products = querries.get_all_cart_products_for_cart(user["cart_id"])
+
+    print(products)
+    return render_template("cart.html", products=products)
+
+
 @app.route("/product/<product_id>")
 def product_route(product_id):
-    img_path = f"/product_{product_id}.jpg"
     product = querries.get_product_by_id(product_id)
-    print("prod id is " + product_id)
+    img_path = f"/static/images/product_{product_id}.jpg"
     return render_template("product.html", product=product, img_path=img_path)
 
 
@@ -143,6 +154,7 @@ def api_get_cart():
 
 
 @app.route("/api_update_cart/<int:product_id>/<int:quantity>", methods=["PUT"])
+@json_response
 def api_update_cart(product_id, quantity):
     print("updating cart")
     user = querries.get_user_by_id(session["user_id"])

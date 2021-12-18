@@ -185,8 +185,8 @@ create table cart_products
             references carts
 );
 
-alter table cart_products
-    owner to admin;
+-- alter table cart_products
+--     owner to admin;
 
 
 
