@@ -32,6 +32,11 @@ def user_route(user_id):
     return render_template("home.html", email=None, categories=categories, suppliers=suppliers)
 
 
+@app.route("/contact")
+def display_contact():
+    return render_template('contact.html')
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     categories = querries.get_all_categories()
