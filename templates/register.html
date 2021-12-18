@@ -1,72 +1,74 @@
 {% extends "root.html" %}
 {% block title %} Home {%  endblock %}
 {% block content %}
-    <div class="card">
-        <img id="header-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="iHealth Logo" width="60px">
-        <h1 class="display-5">Register User</h1>
-        <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <input type="name" class="form-control" id="firstName" name="firstName" placeholder="First name">
-                    </div>
-                    <div class="col">
-                        <input type="name" class="form-control" id="lastName" name="lastName" placeholder="Last name">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <input type="address" class="form-control" id="address" name="address" placeholder="Street Address">
-                    </div>
-                     <div class="col">
-                        <input type="county" class="form-control" id="county" name="county" placeholder="County">
-                    </div>
-                    <div class="col">
-                        <input type="city" class="form-control" id="city" name="city" placeholder="City">
-                    </div>
-                     <div class="col">
-                        <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Birthdate">
+    <div class="products-container search">
+        <div class="card">
+            <img id="header-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="iHealth Logo" width="60px">
+            <h1 class="display-5">Register User</h1>
+            <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="name" class="form-control" id="firstName" name="firstName" placeholder="First name">
+                        </div>
+                        <div class="col">
+                            <input type="name" class="form-control" id="lastName" name="lastName" placeholder="Last name">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <input type="phone" class="form-control" id="phone" name="phone" placeholder="Phone">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="address" class="form-control" id="address" name="address" placeholder="Street Address">
+                        </div>
+                         <div class="col">
+                            <input type="county" class="form-control" id="county" name="county" placeholder="County">
+                        </div>
+                        <div class="col">
+                            <input type="city" class="form-control" id="city" name="city" placeholder="City">
+                        </div>
+                         <div class="col">
+                            <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Birthdate">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <input type="email" class="form-control" id="emailInput" name="email" placeholder="Email">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="phone" class="form-control" id="phone" name="phone" placeholder="Phone">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div clas="col">
-                        <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="email" class="form-control" id="emailInput" name="email" placeholder="Email">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <input type="password" class="form-control" id="passwordInput" name="confirmPassword" placeholder="Confirm password">
+                <div class="form-group">
+                    <div class="row">
+                        <div clas="col">
+                            <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div><button type="submit" class="btn btn-dark">Submit</button></div>
-        </form>
-        {% with messages = get_flashed_messages() %}
-           {% if messages %}
-              {% for message in messages %}
-                 {{ message }}
-              {% endfor %}
-           {% endif %}
-        {% endwith %}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="password" class="form-control" id="passwordInput" name="confirmPassword" placeholder="Confirm password">
+                        </div>
+                    </div>
+                </div>
+                <div><button type="submit" class="btn btn-dark">Submit</button></div>
+            </form>
+            {% with messages = get_flashed_messages() %}
+               {% if messages %}
+                  {% for message in messages %}
+                     {{ message }}
+                  {% endfor %}
+               {% endif %}
+            {% endwith %}
+        </div>
     </div>
 {% endblock %}
