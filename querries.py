@@ -190,7 +190,7 @@ def update_cart(cursor, user, product_id, quantity):
             ;"""
     cursor.execute(
         querry,
-        {"product_id": product_id, "quantity": quantity, "user_id": user["user_id"]},
+        {"product_id": product_id, "quantity": quantity, "user_id": user["cart_id"]},
     )
 
 
@@ -226,5 +226,32 @@ def insert_order(cursor, user, payment_type):
     return cursor.fetchone()
 
 
-# @connection.connection_handler
-# def insert_products
+@connection.connection_handler
+def insert_order_products(cursor, products, order_id):
+    querry = """
+        INSERT INTO order_products (product_id, quantity, order_id)  
+        VALUES
+        (
+            %(product_id)s,
+            %(quantity)s,
+            %(order_id)s
+        )
+            ;"""
+    for product in products:
+        cursor.execute(
+            querry,
+            {
+                "product_id": product["product_id"],
+                "quantity": product["quantity"],
+                "order_id": order_id,
+            },
+        )
+
+
+@connection.connection_handler
+def get_all_suppliers(cursor):
+    querry = """
+        SELECT * FROM suppliers
+            ;"""
+    cursor.execute(querry)
+    return cursor.fetchall()

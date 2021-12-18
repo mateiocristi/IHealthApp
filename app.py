@@ -138,7 +138,7 @@ def api_get_suppliers():
 def api_get_cart():
     user_id = session["user_id"]
     user = querries.get_user_by_id(user_id)
-    cart_products = querries.get_cart_products(user["cart_id"])
+    cart_products = querries.get_all_cart_products_for_cart(user["cart_id"])
     return cart_products
 
 
