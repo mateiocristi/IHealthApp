@@ -33,6 +33,14 @@ function homePageScript() {
 
 
 }
+//
+// export function cartPageScript() {
+//     const arg = `.products-container`
+//     apiGetCart().then(response => {
+//         showCartProducts(response, arg)
+//         handleAddProductClick()
+//     })
+// }
 
 export function productsPageScript() {
     const arg = `.products-container`
@@ -42,9 +50,6 @@ export function productsPageScript() {
     })
 }
 
-export function searchPageScript() {
-
-}
 
 export function showProducts(products, arg) {
     const products_container = document.querySelector(arg)
@@ -82,9 +87,17 @@ export function showProducts(products, arg) {
     }
 }
 
+
+
 export async function apiUpdateCart(product_id, quantity) {
     let url = `/api_update_cart/${product_id}/${quantity}`
     const products = await apiPut(url, {"product_id": product_id, "quantity": quantity})
+    return products
+}
+
+export async function apiGetCart() {
+    let url = `/api_get_cart`
+    const products = await apiGet(url)
     return products
 }
 

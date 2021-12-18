@@ -196,17 +196,19 @@ def api_get_suppliers():
 
 @app.route("/api_get_cart")
 @json_response
-def api_get_cart():
+def api_get_cart_products():
     user_id = session["user_id"]
     user = querries.get_user_by_id(user_id)
     cart_products = querries.get_all_cart_products_for_cart(user["cart_id"])
-    return cart_products
+    products = []
+    for c_prod in cart_products:
+        products.append(querries.get_product_by_id(c_prod["product_id"]))
+    return products
 
 
 @app.route("/api_update_cart/<int:product_id>/<int:quantity>", methods=["PUT"])
 @json_response
 def api_update_cart(product_id, quantity):
-    print("updating cart")
     user = querries.get_user_by_id(session["user_id"])
     querries.update_cart(user, product_id, quantity)
 
