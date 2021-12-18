@@ -7,6 +7,7 @@ drop table if exists support_session CASCADE;
 drop table if exists consultations CASCADE;
 drop table if exists subscriptions CASCADE;
 drop table if exists orders CASCADE;
+drop table if exists order_products CASCADE;
 drop table if exists carts CASCADE;
 drop table if exists users CASCADE;
 drop table if exists access_levels CASCADE;
@@ -119,16 +120,16 @@ alter table users
 
 create table if not exists orders
 (
-    id                  serial
+    id           serial
         constraint orders_pk
             primary key,
-    quantity_product_id text,
-    status              text,
-    payment_type        text,
-    user_id             integer
+    status       text default 'Processing'::text,
+    payment_type text,
+    user_id      integer
         constraint orders_users_id_fk
             references users
 );
+
 
 create table if not exists subscriptions
 (
@@ -172,6 +173,21 @@ create table if not exists support_session
         constraint support_session_users_id_fk_2
             references users
 );
+
+create table cart_products
+(
+    product_id integer
+        constraint cart_products_products_id_fk
+            references products,
+    quantity   integer,
+    cart_id    integer
+        constraint cart_products_carts_id_fk
+            references carts
+);
+
+alter table cart_products
+    owner to admin;
+
 
 
 

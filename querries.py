@@ -192,3 +192,39 @@ def update_cart(cursor, user, product_id, quantity):
         querry,
         {"product_id": product_id, "quantity": quantity, "user_id": user["user_id"]},
     )
+
+
+@connection.connection_handler
+def get_order_products_by_order_id(cursor, order_id):
+    querry = """
+        SELECT * FROM order_products WHERE order_id = %(order_id)s
+            ;"""
+    cursor.execute(querry, {"order_id": order_id})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_all_orders_by_user_id(cursor, user):
+    querry = """
+        SELECT * FROM orders WHERE user_id = %(user_id)s
+            ;"""
+    cursor.execute(querry, {"user_id": user["id"]})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def insert_order(cursor, user, payment_type):
+    querry = """
+        INSERT INTO orders (payment_type, user_id) VALUES 
+        (
+        %(payment_type)s,
+        %(user_id)s
+        )
+        RETURNING id
+            ;"""
+    cursor.execute(querry, {"payment_type": payment_type, "user_id": user["id"]})
+    return cursor.fetchone()
+
+
+# @connection.connection_handler
+# def insert_products
